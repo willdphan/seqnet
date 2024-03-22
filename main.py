@@ -59,7 +59,8 @@ parser.add_argument('--seqL_filterData', type=int, help='during testing, db and 
 parser.add_argument('--dataset', type=str, default='nordland-sw', help='Dataset to use', choices=['nordland-sw', 'nordland-sf', 'oxford-v1.0', 'oxford-pnv', 'msls'])
 parser.add_argument('--msls_trainCity', type=str, default='melbourne', help='trainCityName')
 parser.add_argument('--msls_valCity', type=str, default='austin', help='valCityName')
-parser.add_argument('--pooling', type=str, default='seqnet', help='type of pooling to use', choices=[ 'seqnet', 'smooth', 'delta', 'single','single+seqmatch', 's1+seqmatch'])
+# EDITED
+parser.add_argument('--pooling', type=str, default='seqnet', help='type of pooling to use', choices=[ 'seqnet', 'smooth', 'delta', 'single','single+seqmatch', 's1+seqmatch', 'seqnet_mix'])
 parser.add_argument('--seqL', type=int, default=5, help='Sequence Length')
 parser.add_argument('--w', type=int, default=3, help='filter size for seqNet')
 parser.add_argument('--outDims', type=int, default=None, help='Output descriptor dimensions')

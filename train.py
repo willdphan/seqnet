@@ -1,5 +1,3 @@
-# python3 /Users/williamphan/Desktop/seqNet/main.py --mode train --pooling seqnet --dataset nordland-sw --seqL 10 --w 5 --outDims 4096 --expName "w5" --nocuda
-
 import torch
 from torch.utils.data import DataLoader
 from torch.utils.data.dataset import Subset
@@ -35,7 +33,6 @@ def train(opt, model, encoder_dim, device, dataset, criterion, optimizer, train_
             with torch.no_grad():
                 for iteration, (input, indices) in tqdm(enumerate(whole_training_data_loader, 1),total=len(whole_training_data_loader)-1, leave=False):
                     image_encoding = (input).float().to(device)
-                    # print(f"image being encoded shape: {image_encoding.shape}")
                     seq_encoding = model.pool(image_encoding)
                     h5feat[indices.detach().numpy(), :] = seq_encoding.detach().cpu().numpy()
                     del input, image_encoding, seq_encoding
@@ -105,4 +102,3 @@ def train(opt, model, encoder_dim, device, dataset, criterion, optimizer, train_
     print("===> Epoch {} Complete: Avg. Loss: {:.4f}".format(epoch, avg_loss), 
             flush=True)
     writer.add_scalar('Train/AvgLoss', avg_loss, epoch)
-
