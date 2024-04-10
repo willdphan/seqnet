@@ -109,7 +109,9 @@ class Dataset():
         indices = list(itertools.chain(*indices))
 
         return query, positive, negatives, negCounts, indices
-
+"""
+Retrieves sequence indices for a given descriptor, used to fetch the actual descriptors for positives and negatives.
+"""
 def getSeqInds(idx,seqL,maxNum,minNum=0,retLenDiff=False):
     seqLOrig = seqL
     seqInds = np.arange(max(minNum,idx-seqL//2),min(idx+seqL-seqL//2,maxNum),1)
@@ -131,6 +133,9 @@ def getValidSeqInds(seqBounds,seqL):
         validFlags.append(True if lenDiff == 0 else False)
     return validFlags
 
+"""
+Retrieves sequence indices for a given descriptor, used to fetch the actual descriptors for positives and negatives.
+"""
 def parse_db_struct(path):
     mat = loadmat(path)
 
@@ -272,7 +277,9 @@ class WholeDatasetFromStruct(data.Dataset):
 
     def __len__(self):
         return len(self.validInds)
-
+    """
+    Identifies and returns positive samples for evaluation, typically within a trivial threshold range.
+    """
     def get_positives(self,retDists=False):
         # positives for evaluation are those within trivial threshold range
         # fit NN to find them, search by radius
@@ -288,7 +295,9 @@ class WholeDatasetFromStruct(data.Dataset):
         else:
             return self.positives
 
-
+"""
+Initializes the dataset object with necessary parameters and pre-computes potential positives and negatives for each query.
+"""
 class QueryDatasetFromStruct(data.Dataset):
     def __init__(self, structFile, indsSplit, dbDescs, qDescs, nNegSample=1000, nNeg=10, margin=0.1, use_regions=False, seqL=1, seqBounds=None):
         super().__init__()
@@ -349,7 +358,9 @@ class QueryDatasetFromStruct(data.Dataset):
         self.h5feat = None
 
         self.negCache = [np.empty((0,)) for _ in range(self.dbStruct.numQ)]
-
+    """
+    Dynamically selects a specific positive and a set of negatives for a given query (anchor) to form a triplet for training.
+    """
     def __getitem__(self, index):
         with h5py.File(self.cache, mode='r') as h5:
             h5feat = h5.get("features")
